@@ -512,136 +512,6 @@ final class CTT_Tracking {
 			}
 		}
 	}
-	function ctt_tracking_get_info( $ctt_tracking_code, $html = false ) {
-		if ( $html ) { //Debug - Load from HTML string
-			$body = array(
-				'status' => true,
-				'body'   => trim( $html ),
-			);
-		} else {
-			$body = $this->ctt_tracking_get_info_body( $ctt_tracking_code );
-		}
-		if ( $body['status'] ) {
-			$body = trim( $body['body'] );
-			require_once( 'simplehtmldom_1_9/simple_html_dom.php' );
-			if ( ! $html = str_get_html( $body ) ) {
-				return array(
-					'status'  => false,
-					'message' => __( 'Error getting tracking information', 'portugal-ctt-tracking-woocommerce' ) . ': ' . __( 'Could not parse HTML', 'portugal-ctt-tracking-woocommerce' )
-				);
-			} else {
-				//Results table?
-				if ( ! $table = $html->find( 'div#objectSearchResult table.full-width' ) ) {
-					return array(
-						'status'  => false,
-						'message' => __( 'Error getting tracking information', 'portugal-ctt-tracking-woocommerce' ) . ': ' . __( 'Could not find div#objectSearchResult table.full-width', 'portugal-ctt-tracking-woocommerce' )
-					);
-				} else {
-					$table = $table[0];
-					//Remove thead
-					foreach ( $table->find( 'thead' ) as $node ) {
-						$node->outertext = '';
-					}
-					$table = str_get_html( $table->save() );
-					//Object not found? - Check 5th column (index 4)
-					foreach ( $table->find( 'tr' ) as $tr ) {
-						$tds = $tr->find( 'td' );
-						$text = $this->ctt_tracking_clean_html_node_content( $tds[4]->innertext );
-						if ( $text == 'Objeto não encontrado' ) {
-							return array(
-								'status'  => false,
-								'message' => __( 'Error getting tracking information', 'portugal-ctt-tracking-woocommerce' ) . ': ' . __( 'Object not found', 'portugal-ctt-tracking-woocommerce' )
-							);
-						}
-						break;
-					};
-					//Object seems found, let's iterate
-					$info = array();
-					$trs = $table->find( 'tr' );
-					/*
-						First TR has the object basic info
-						Columns:
-						0 - Nº de Objeto
-						1 - Produto
-						2 - Data
-						3 - Hora
-						4 - Estado
-						5 - Info
-					*/
-					$tds = $trs[0]->find( 'td' );
-					$info[ 'object' ]       = $this->ctt_tracking_clean_html_node_content( $tds[0]->innertext );
-					$info[ 'product' ]      = $this->ctt_tracking_clean_html_node_content( $tds[1]->innertext );
-					$info[ 'date' ]         = $this->ctt_tracking_fix_date( $this->ctt_tracking_clean_html_node_content( $tds[2]->innertext ) );
-					$info[ 'time' ]         = $this->ctt_tracking_clean_html_node_content( $tds[3]->innertext );
-					$info[ 'status' ]       = $this->ctt_tracking_clean_html_node_content( $tds[4]->innertext );
-					$info[ 'status_final' ] = $this->ctt_tracking_is_status_final( $info[ 'status' ] );
-					$info[ 'events' ]       = array();
-					/*
-						Third TR has the tracking details
-						Unless it doesn't... https://wordpress.org/support/topic/erro-ao-gravar-no-da-carta-de-porte-dos-ctt/
-					*/
-					if ( $details_table = $table->find( 'tr#details_0 td table.full-width' ) ) {
-						$details_table = $details_table[0];
-						if ( $details_table ) {
-							//Remove thead
-							foreach ( $details_table->find( 'thead' ) as $node ) {
-								$node->outertext = '';
-							}
-							//Fix tr.group
-							$html = preg_replace('~>\s+<~', '><', $details_table->save() );
-							$html = str_replace( '<tr><tr class="group">', '<tr class="group">', $html );
-							$html = str_replace( '</tr><td>', '</tr><tr><td>', $html );
-							$details_table = str_get_html( $html );
-							$i = 0;
-							foreach ( $details_table->find( 'tr' ) as $tr ) {
-								$tds  = $tr->find( 'td' );
-								if ( $tr->class == 'group' ) {
-									$date = $this->ctt_tracking_fix_date( $this->ctt_tracking_clean_html_node_content( $tds[0]->innertext ) );
-									$info[ 'events' ][ $date ] = array();
-								} else {
-									if ( count( $tds ) == 5 ) {
-										/*
-											First TR has the object basic info
-											Columns:
-											0 - Hora
-											1 - Estado
-											2 - Motivo
-											3 - Local
-											4 - Recetor
-										*/
-										$info[ 'events' ][ $date ][] = array(
-											'time'     => $this->ctt_tracking_clean_html_node_content( $tds[0]->innertext ),
-											'status'   => $this->ctt_tracking_clean_html_node_content( $tds[1]->innertext ),
-											'reason'   => $this->ctt_tracking_clean_html_node_content( $tds[2]->innertext ),
-											'place'    => $this->ctt_tracking_clean_html_node_content( $tds[3]->innertext ),
-											'receiver' => $this->ctt_tracking_clean_html_node_content( $tds[4]->innertext ),
-										);
-									}
-								}
-							}
-							return array(
-								'status'  => true,
-								'message' => $info[ 'status' ],
-								'info'    => $info,
-							);
-						} else {
-							return array(
-								'status'  => false,
-								'message' => __( 'Error getting tracking information', 'portugal-ctt-tracking-woocommerce' ) . ': ' . __( 'Tracking information details not found', 'portugal-ctt-tracking-woocommerce' )
-							);
-						}
-					} else {
-						return array(
-							'status'  => false,
-							'message' => __( 'Error getting tracking information', 'portugal-ctt-tracking-woocommerce' ) . ': ' . __( 'Tracking information details not found', 'portugal-ctt-tracking-woocommerce' )
-						);
-					}
-				}
-			}
-		} else {
-			return $body;
-		}
-	}
 
 	/* Update tracking code on order - for 3rd party usage */
 	function ctt_tracking_set_tracking_code_for_order( $order_id, $ctt_tracking_code ) {
@@ -660,7 +530,7 @@ final class CTT_Tracking {
 				if ( trim( $ctt_tracking_code ) != '' ) {
 					
 					//Until 2022-09-01
-					//$info = $this->ctt_tracking_get_info( trim( $ctt_tracking_code ) );
+					//$info = $this->ctt_tracking_get_info( trim( $ctt_tracking_code ) ); //Completely removed on 2.2
 					//$info[ 'last_update' ] = date_i18n( 'Y-m-d H:i' );
 					
 					//After 2022-09-01

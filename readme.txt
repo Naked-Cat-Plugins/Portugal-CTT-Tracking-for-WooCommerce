@@ -1,10 +1,10 @@
 === Portugal CTT Tracking for WooCommerce ===
 Contributors: webdados, ptwooplugins
 Tags: woocommerce, shipping, ctt, tracking, ecommerce, e-commerce, delivery, webdados
-Requires at least: 5.4
-Tested up to: 6.4
+Requires at least: 5.6
+Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 2.1
+Stable tag: 2.2
 
 Lets you associate a tracking code with a WooCommerce order so that both the store owner and the client can track the order sent with CTT
 
@@ -19,11 +19,11 @@ Clients will also be able to track the order shipping status on the “My Accoun
 = Features: =
 
 * Add a CTT tracking code to the order
-* Shop owner can check the shipping status on the order edit screen
-* Client can check the delivery status on the order page on My account
+* Shop owner can check the shipping status on the order edit screen, by clicking the CTT link
+* Client can check the delivery status on the order page on My account, by clicking the CTT link
 * Tracking code is added to order emails sent to the client
-* Tracking information is updated every time the order edit screen or the order page on My account is visited and 4 hours have passed since the last update
-* WooCommerce 7.1 and above High-Performance Order Storage compatible
+* High-Performance Order Storage compatible
+* Block based checkout compatible
 
 = Do your customers still write the full address details manually on the checkout? =
 
@@ -69,22 +69,11 @@ Nothing.
 
 No.
 
-= Is it possible to set the CTT tracking code on an order and update the information from the CTT website via hooks? =
+= Is it possible to set the CTT tracking code on an order via hooks? =
 
 Yes.
 
-You can use the `portugal_ctt_tracking_set_tracking_code` action with two arguments, `$order_id` and `$tracking_code`, to set the tracking code on your order and immediatly fetch new information from the CTT website.
-
-You can use the `portugal_ctt_tracking_update_info_for_order` action if your order already has a tracking code set to fetch new information from the CTT website.
-Please use with caution because you can slow down your website if you start updating all your orders, even the ones that don't need update anymore. No checks are made, we just go fetch the information because you ask us to do so.
-
-= Is this plugin compatible with the new WooCommerce High-Performance Order Storage? =
-
-Yes.
-
-= Is this plugin compatible with the new WooCommerce block-based Cart and Checkout? =
-
-Yes.
+You can use the `portugal_ctt_tracking_set_tracking_code` action with two arguments, `$order_id` and `$tracking_code`, to set the tracking code on your order.
 
 = I need technical support. Who should I contact, CTT or Webdados? =
 
@@ -97,6 +86,12 @@ For premium/urgent support or custom developments you should contact [Webdados](
 You can report any security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/portugal-ctt-tracking-woocommerce). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
 
 == Changelog ==
+
+= 2.2 - 2024-01-17 =
+* Remove code related to fetch the information from the CTT website, including simplehtmldom, as is not likely we'll be able to activate that functionality again
+* Security update
+* Requires WooCommerce 6.0 and WordPress 5.6
+* Tested with WordPress 6.5-alpha-57299 and WooCommerce 8.5.1
 
 = 2.1 - 2023-12-12 =
 * Declare WooCommerce block-based Cart and Checkout compatibility

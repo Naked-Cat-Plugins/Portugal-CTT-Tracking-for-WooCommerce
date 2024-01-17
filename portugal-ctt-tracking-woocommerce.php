@@ -3,22 +3,23 @@
  * Plugin Name: Portugal CTT Tracking for WooCommerce
  * Plugin URI: https://www.webdados.pt/wordpress/plugins/tracking-ctt-portugal-para-woocommerce-wordpress/
  * Description: Lets you associate a tracking code with a WooCommerce order so that both the store owner and the client can track the order sent with CTT
- * Version: 2.1
+ * Version: 2.2
  * Author: PT Woo Plugins (by Webdados)
  * Author URI: https://ptwooplugins.com
  * Text Domain: portugal-ctt-tracking-woocommerce
  * Domain Path: /languages/
- * Requires at least: 5.4
+ * Requires at least: 5.6
+ * Tested up to: 6.5
  * Requires PHP: 7.0
- * WC requires at least: 5.0
- * WC tested up to: 8.4
+ * WC requires at least: 6.0
+ * WC tested up to: 8.5
 */
 
 /* WooCommerce CRUD ready */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define( 'CTT_TRACKING_WP_VERSION', '5.4' );
+define( 'CTT_TRACKING_WP_VERSION', '5.6' );
 
 /* Localization */
 add_action( 'plugins_loaded', 'ctt_tracking_load_textdomain', 0 );
@@ -77,7 +78,7 @@ function admin_notices_ctt_tracking_not_active() {
 	<?php
 }
 
-/* HPOS Compatible */
+/* HPOS & Blocks Compatible */
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );

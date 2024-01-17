@@ -1,0 +1,11 @@
+
+	- Se os CTT derem acesso à API, colocá-la no plugin de Códigos Postais, mudando o nome do mesmo e adicionando esta nova funcionalidade, passando a fazer fetch da informação apenas para clientes pagantes
+		- Eventualmente o cliente poder colocar as suas credenciais CTT e o site ser automaticamente notificado de novos eventos
+
+	- Adicionar NAG InvoiceXpress
+
+	- Passar a usar isto? (opcional, com API key do dono do site ou sempre?)
+	https://www.trackingmore.com/api-index.html (paga) ou outra que seja free
+
+	- Talvez para uma versão Pro, poder mudar o estado da encomenda conforme o estado final do tracking, usando por exemplo isto:
+	https://www.trackingmore.com/api-index.html

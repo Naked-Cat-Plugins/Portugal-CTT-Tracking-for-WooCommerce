@@ -1,26 +1,26 @@
 <?php
 /*
- * Plugin Name: Portugal CTT Tracking for WooCommerce
- * Plugin URI: https://www.webdados.pt/wordpress/plugins/tracking-ctt-portugal-para-woocommerce-wordpress/
- * Description: Lets you associate a tracking code with a WooCommerce order so that both the store owner and the client can track the order sent with CTT
- * Version: 2.2
- * Author: PT Woo Plugins (by Webdados)
- * Author URI: https://ptwooplugins.com
- * Text Domain: portugal-ctt-tracking-woocommerce
- * Domain Path: /languages/
- * Requires at least: 5.6
- * Tested up to: 6.5
- * Requires PHP: 7.0
- * WC requires at least: 6.0
- * WC tested up to: 8.5
- * Requires Plugins: woocommerce
+ * Plugin Name:          Portugal CTT Tracking for WooCommerce
+ * Plugin URI:           https://www.webdados.pt/wordpress/plugins/tracking-ctt-portugal-para-woocommerce-wordpress/
+ * Description:          Lets you associate a tracking code with a WooCommerce order so that both the store owner and the client can track the order sent with CTT
+ * Version:              2.3
+ * Author:               Naked Cat Plugins (by Webdados)
+ * Author URI:           https://nakedcatplugins.com
+ * Text Domain:          portugal-ctt-tracking-woocommerce
+ * Domain Path:          /languages/
+ * Requires at least:    5.8
+ * Tested up to:         6.8
+ * Requires PHP:         7.2
+ * WC requires at least: 8.0
+ * WC tested up to:      9.8
+ * Requires Plugins:     woocommerce
 */
 
 /* WooCommerce CRUD ready */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define( 'CTT_TRACKING_WP_VERSION', '5.6' );
+define( 'CTT_TRACKING_WC_VERSION', '8.0' );
 
 /* Localization */
 add_action( 'plugins_loaded', 'ctt_tracking_load_textdomain', 0 );
@@ -41,7 +41,7 @@ if ( in_array( 'woocommerce/woocommerce.php', (array) get_option( 'active_plugin
 	/* Our own order class and the main classes */
 	add_action( 'plugins_loaded', 'ctt_tracking_init', 1 );
 	function ctt_tracking_init() {
-		if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, CTT_TRACKING_WP_VERSION, '>=' ) ) { //We check again because WooCommerce could have "died"
+		if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, CTT_TRACKING_WC_VERSION, '>=' ) ) { //We check again because WooCommerce could have "died"
 			require_once( dirname( __FILE__ ) . '/includes/class-ctt-tracking.php' );
 			$GLOBALS['CTT_Tracking'] = CTT_Tracking();
 			/* Add settings links - This is here because inside the main class we cannot call the correct plugin_basename( __FILE__ ) */
@@ -72,7 +72,7 @@ function admin_notices_ctt_tracking_not_active() {
 		<p><?php
 			printf(
 				__( '<strong>Portugal CTT Tracking for WooCommerce</strong> is installed and active but <strong>WooCommerce (%s or above)</strong> is not.', 'portugal-ctt-tracking-woocommerce' ),
-				CTT_TRACKING_WP_VERSION
+				CTT_TRACKING_WC_VERSION
 			)
 		?></p>
 	</div>

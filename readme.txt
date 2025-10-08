@@ -2,7 +2,7 @@
 Contributors: nakedcatplugins, webdados
 Tags: woocommerce, shipping, ctt, tracking, ecommerce, e-commerce, delivery, webdados
 Requires at least: 5.8
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.2
 Stable tag: 2.3
 License: GPLv3

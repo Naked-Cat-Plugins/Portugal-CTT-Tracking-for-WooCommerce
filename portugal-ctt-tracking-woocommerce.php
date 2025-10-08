@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name:          Portugal CTT Tracking for WooCommerce
  * Plugin URI:           https://www.webdados.pt/wordpress/plugins/tracking-ctt-portugal-para-woocommerce-wordpress/
  * Description:          Lets you associate a tracking code with a WooCommerce order so that both the store owner and the client can track the order sent with CTT
@@ -12,96 +12,115 @@
  * Tested up to:         6.8
  * Requires PHP:         7.2
  * WC requires at least: 8.0
- * WC tested up to:      9.8
+ * WC tested up to:      10.2
  * Requires Plugins:     woocommerce
-*/
+ **/
 
 /* WooCommerce CRUD ready */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 define( 'CTT_TRACKING_WC_VERSION', '8.0' );
 
-/* Localization */
-add_action( 'plugins_loaded', 'ctt_tracking_load_textdomain', 0 );
+/**
+ * Load plugin text domain for internationalization.
+ *
+ * @return void
+ */
 function ctt_tracking_load_textdomain() {
 	load_plugin_textdomain( 'portugal-ctt-tracking-woocommerce' );
 }
+add_action( 'init', 'ctt_tracking_load_textdomain', 0 );
 
-/* Check if WooCommerce is active - Get active network plugins - "Stolen" from Novalnet Payment Gateway */
-function ctt_tracking_active_nw_plugins() {
-	if ( !is_multisite() )
-		return false;
-	$ctt_tracking_activePlugins = ( get_site_option('active_sitewide_plugins' ) ) ? array_keys( get_site_option('active_sitewide_plugins' ) ) : array();
-	return $ctt_tracking_activePlugins;
+/**
+ * Initialize the CTT Tracking plugin.
+ *
+ * Checks if WooCommerce is available and meets the minimum version
+ * requirement before initializing the main plugin class. If requirements
+ * are not met, displays an admin notice instead.
+ *
+ * @return void
+ */
+function ctt_tracking_init() {
+	if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, CTT_TRACKING_WC_VERSION, '>=' ) ) { // We check again because WooCommerce could have "died"
+		require_once __DIR__ . '/includes/class-ctt-tracking.php';
+		$GLOBALS['CTT_Tracking'] = CTT_Tracking();
+		/* Add settings links - This is here because inside the main class we cannot call the correct plugin_basename( __FILE__ ) */
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( CTT_Tracking(), 'add_settings_link' ) );
+	} else {
+		add_action( 'admin_notices', 'admin_notices_ctt_tracking_not_active' );
+	}
 }
-if ( in_array( 'woocommerce/woocommerce.php', (array) get_option( 'active_plugins' ) ) || in_array( 'woocommerce/woocommerce.php', (array) ctt_tracking_active_nw_plugins() ) ) {
+add_action( 'init', 'ctt_tracking_init', 1 );
 
-
-	/* Our own order class and the main classes */
-	add_action( 'plugins_loaded', 'ctt_tracking_init', 1 );
-	function ctt_tracking_init() {
-		if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, CTT_TRACKING_WC_VERSION, '>=' ) ) { //We check again because WooCommerce could have "died"
-			require_once( dirname( __FILE__ ) . '/includes/class-ctt-tracking.php' );
-			$GLOBALS['CTT_Tracking'] = CTT_Tracking();
-			/* Add settings links - This is here because inside the main class we cannot call the correct plugin_basename( __FILE__ ) */
-			add_filter( 'plugin_action_links_'.plugin_basename( __FILE__ ), array( CTT_Tracking(), 'add_settings_link' ) );
-		} else {
-			add_action( 'admin_notices', 'admin_notices_ctt_tracking_not_active' );
-		}
-	}
-
-	/* Main class */
-	function CTT_Tracking() {
-		return CTT_Tracking::instance(); 
-	}
-
-	
-} else {
-
-
-	add_action( 'admin_notices', 'admin_notices_ctt_tracking_not_active' );
-
-
+/**
+ * Get the main CTT_Tracking instance.
+ *
+ * Returns the singleton instance of the CTT_Tracking class.
+ * This function provides global access to the main plugin instance.
+ *
+ * @return CTT_Tracking The main CTT_Tracking instance
+ */
+function CTT_Tracking() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+	return CTT_Tracking::instance();
 }
 
-
+/**
+ * Display admin notice when plugin requirements are not met.
+ *
+ * Shows an error notice in the WordPress admin when WooCommerce
+ * is not installed/active or doesn't meet the minimum version
+ * requirement for this plugin to function properly.
+ *
+ * @return void
+ */
 function admin_notices_ctt_tracking_not_active() {
 	?>
 	<div class="notice notice-error is-dismissible">
-		<p><?php
-			printf(
-				__( '<strong>Portugal CTT Tracking for WooCommerce</strong> is installed and active but <strong>WooCommerce (%s or above)</strong> is not.', 'portugal-ctt-tracking-woocommerce' ),
-				CTT_TRACKING_WC_VERSION
-			)
-		?></p>
+		<p>
+		<?php
+			echo wp_kses_post(
+				sprintf(
+					/* translators: 1: Required WooCommerce version */
+					__( '<strong>Portugal CTT Tracking for WooCommerce</strong> is installed and active but <strong>WooCommerce (%s or above)</strong> is not.', 'portugal-ctt-tracking-woocommerce' ),
+					CTT_TRACKING_WC_VERSION
+				)
+			);
+		?>
+		</p>
 	</div>
 	<?php
 }
 
 /* HPOS & Blocks Compatible */
-add_action( 'before_woocommerce_init', function() {
-	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+		}
 	}
-} );
+);
 
 
 /* Portuguese Postcodes nag */
-add_action( 'admin_init', function() {
-	if (
+add_action(
+	'admin_init',
+	function () {
+		if (
 		( ! defined( 'WEBDADOS_PORTUGUESE_POSTCODES_NAG' ) )
 		&&
 		( ! function_exists( '\Webdados\PortuguesePostcodesWooCommerce\init' ) )
 		&&
 		empty( get_transient( 'webdados_portuguese_postcodes_nag' ) )
-	) {
-		define( 'WEBDADOS_PORTUGUESE_POSTCODES_NAG', true );
-		require_once( 'webdados_portuguese_postcodes_nag/webdados_portuguese_postcodes_nag.php' );
+		) {
+			define( 'WEBDADOS_PORTUGUESE_POSTCODES_NAG', true );
+			require_once 'webdados-portuguese-postcodes-nag/webdados-portuguese-postcodes-nag.php';
+		}
 	}
-} );
-
+);
 
 /* If you're reading this you must know what you're doing ;-) Greetings from sunny Portugal! */
-

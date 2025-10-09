@@ -1,10 +1,10 @@
 === Portugal CTT Tracking for WooCommerce ===
 Contributors: nakedcatplugins, webdados
-Tags: woocommerce, shipping, ctt, tracking, ecommerce, e-commerce, delivery, webdados
+Tags: woocommerce, shipping, ctt, tracking, ecommerce, delivery
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 2.3
+Stable tag: 2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,7 +16,7 @@ Shop owners using the Portuguese carrier CTT can use this plugin to associate th
 
 Clients will also be able to track the order shipping status on the “My Account” page.
 
-**[Due to changes in CTT's systems, the tracking information is currently unavailable and can only be accessed through their website. We are working on a workaround but we cannot commit to a deadline.](https://wordpress.org/support/topic/informacao-de-seguimento-indisponivel-ler-antes-de-criar-topico/)**
+**[Due to changes in CTT’s systems, the tracking information is currently unavailable and can only be accessed through their website. We are working on a workaround but we cannot commit to a deadline.](https://wordpress.org/support/topic/informacao-de-seguimento-indisponivel-ler-antes-de-criar-topico/)**
 
 = Features: =
 
@@ -89,13 +89,18 @@ You can report any security bugs found in the source code of this plugin through
 
 == Changelog ==
 
+= 2.4 - 2025-10-09 =
+* [FIX] Email language
+* [DEV] Implement WordPress Coding Standards
+* [DEV] Tested with WordPress 6.9-alpha-60812 and WooCommerce 10.2.2
+
 = 2.3 - 2025-05-09 =
 * [NEW] We are now called Naked Cat Plugins 😻
 * [DEV] Requires WordPress 5.8 and WooCommerce 8.0
 * [DEV] Tested with WordPress 6.8 and WooCommerce 9.8.4
 
 = 2.2 - 2024-01-19 =
-* Remove code related to fetch the information from the CTT website, including simplehtmldom, as is not likely we'll be able to activate that functionality again
+* Remove code related to fetch the information from the CTT website, including simplehtmldom, as is not likely we’ll be able to activate that functionality again
 * Security update
 * Requires WooCommerce 6.0 and WordPress 5.6
 * Tested with WordPress 6.5-alpha-57299 and WooCommerce 8.5.1
@@ -119,7 +124,7 @@ You can report any security bugs found in the source code of this plugin through
 * Tested with WordPress 6.2-alpha-54855 and WooCommerce 7.1
 
 = 1.7.0 - 2022-09-01 =
-* **Due to changes in CTT's systems, the tracking information is currently unavailable and can only be accessed through their website**
+* **Due to changes in CTT’s systems, the tracking information is currently unavailable and can only be accessed through their website**
 * Requires WooCommerce 4.0
 * Tested with WordPress 6.1-alpha-54043 and WooCommerce 6.9.0-beta.2
 

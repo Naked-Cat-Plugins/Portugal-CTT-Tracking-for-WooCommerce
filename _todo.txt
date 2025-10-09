@@ -1,4 +1,11 @@
-
+	- Fix email language -> Parece OK
+		- WP Admin Default = EN:
+			- PT order: PT, OK
+			- EN order: EN, OK
+		- WP Admin Deafult = PT:
+			- PT order: PT, OK
+			- EN order: EN, OK
+	
 	- Se os CTT derem acesso à API, colocá-la no plugin de Códigos Postais, mudando o nome do mesmo e adicionando esta nova funcionalidade, passando a fazer fetch da informação apenas para clientes pagantes
 		- Eventualmente o cliente poder colocar as suas credenciais CTT e o site ser automaticamente notificado de novos eventos
 

@@ -1,6 +1,6 @@
 === Portugal CTT Tracking for WooCommerce ===
 Contributors: nakedcatplugins, webdados
-Tags: woocommerce, shipping, ctt, tracking, ecommerce, delivery
+Tags: shipping, ctt, tracking, ecommerce, delivery
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.2

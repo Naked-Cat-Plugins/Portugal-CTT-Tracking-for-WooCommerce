@@ -29,7 +29,7 @@ function webdados_portuguese_postcodes_nag() {
 		<script type="text/javascript">
 		jQuery(function($) {
 			$( document ).on( 'click', '#webdados_portuguese_postcodes_nag .notice-dismiss', function () {
-				//AJAX SET TRANSIENT FOR 60 DAYS
+				// AJAX SET TRANSIENT FOR 120 DAYS
 				$.ajax( ajaxurl, {
 					type: 'POST',
 					data: {
@@ -67,14 +67,14 @@ function webdados_portuguese_postcodes_nag() {
 add_action( 'admin_notices', 'webdados_portuguese_postcodes_nag' );
 
 /**
- * Dismiss nag for 90 days
+ * Dismiss nag for 120 days
  *
  * @return void
  */
 function dismiss_webdados_portuguese_postcodes_nag() {
-	$days       = 90;
-	$expiration = $days * DAY_IN_SECONDS;
-	set_transient( 'webdados_portuguese_postcodes_nag', 1, $expiration );
+	$days                 = 120;
+	$expiration_timestamp = time() + ( $days * DAY_IN_SECONDS );
+	update_user_meta( get_current_user_id(), 'webdados_portuguese_postcodes_nag_dismissed_until', $expiration_timestamp );
 	wp_die();
 }
 add_action( 'wp_ajax_dismiss_webdados_portuguese_postcodes_nag', 'dismiss_webdados_portuguese_postcodes_nag' );

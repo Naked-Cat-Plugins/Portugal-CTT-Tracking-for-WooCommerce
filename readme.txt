@@ -2,7 +2,7 @@
 Contributors: nakedcatplugins, webdados
 Tags: shipping, ctt, tracking, ecommerce, delivery
 Requires at least: 5.8
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.2
 Stable tag: 2.4
 License: GPLv3
@@ -88,6 +88,15 @@ For premium/urgent support or custom developments you should contact [Webdados](
 You can report any security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/portugal-ctt-tracking-woocommerce). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
 
 == Changelog ==
+
+= 2.5 - TBA =
+* [NEW] Plugin ownership transferred from [Marco Almeida | Webdados](https://profiles.wordpress.org/webdados/) to [Naked Cat Plugins](https://profiles.wordpress.org/nakedcatplugins/) on WordPress.org - No worries, we’re the same people :-)
+* [TWEAK] Show the “Portuguese Postcodes for WooCommerce” notice less often and store dismissal in user meta instead of transients
+* ifthenpay
+* [DEV] Removed `load_plugin_textdomain` call as WordPress handles it
+* [DEV] Improved PHPCS rules
+* [DEV] Implement release automations via GitHub Actions
+* [DEV] Tested up to WordPress 7.0-RC2-62197 and WooCommerce 10.7.0-beta.2
 
 = 2.4 - 2025-10-09 =
 * [FIX] Email language

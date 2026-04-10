@@ -7,12 +7,11 @@
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com
  * Text Domain:          portugal-ctt-tracking-woocommerce
- * Domain Path:          /languages/
  * Requires at least:    5.8
- * Tested up to:         6.9
+ * Tested up to:         7.0
  * Requires PHP:         7.2
  * WC requires at least: 8.0
- * WC tested up to:      10.2
+ * WC tested up to:      10.7
  * Requires Plugins:     woocommerce
  **/
 
@@ -23,16 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'CTT_TRACKING_WC_VERSION', '8.0' );
-
-/**
- * Load plugin text domain for internationalization.
- *
- * @return void
- */
-function ctt_tracking_load_textdomain() {
-	load_plugin_textdomain( 'portugal-ctt-tracking-woocommerce' );
-}
-add_action( 'init', 'ctt_tracking_load_textdomain', 0 );
 
 /**
  * Initialize the CTT Tracking plugin.
@@ -115,7 +104,9 @@ add_action(
 		&&
 		( ! function_exists( '\Webdados\PortuguesePostcodesWooCommerce\init' ) )
 		&&
-		empty( get_transient( 'webdados_portuguese_postcodes_nag' ) )
+		empty( get_transient( 'webdados_portuguese_postcodes_nag' ) ) // Not used anymore, but kept for backwards compatibility
+		&&
+		( intval( get_user_meta( get_current_user_id(), 'webdados_portuguese_postcodes_nag_dismissed_until', true ) ) < time() )
 		) {
 			define( 'WEBDADOS_PORTUGUESE_POSTCODES_NAG', true );
 			require_once 'webdados-portuguese-postcodes-nag/webdados-portuguese-postcodes-nag.php';

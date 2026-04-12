@@ -5,6 +5,7 @@
 	<file>.</file>
 
 	<!-- Exclude paths. -->
+	<exclude-pattern>/recommend-ifthenpay/*</exclude-pattern>
 	<!--<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/build/*</exclude-pattern>
 	<exclude-pattern>/src/icon.js</exclude-pattern>-->

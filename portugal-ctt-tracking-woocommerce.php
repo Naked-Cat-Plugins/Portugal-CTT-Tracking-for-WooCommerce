@@ -3,7 +3,7 @@
  * Plugin Name:          Portugal CTT Tracking for WooCommerce
  * Plugin URI:           https://www.webdados.pt/wordpress/plugins/tracking-ctt-portugal-para-woocommerce-wordpress/
  * Description:          Lets you associate a tracking code with a WooCommerce order so that both the store owner and the client can track the order sent with CTT
- * Version:              2.5
+ * Version:              2.6
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com
  * Text Domain:          portugal-ctt-tracking-woocommerce

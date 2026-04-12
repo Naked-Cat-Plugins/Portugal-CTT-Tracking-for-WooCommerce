@@ -1,22 +1,11 @@
 <?php
 /**
- * Recommend_Ifthenpay
+ * Class Recommend_Ifthenpay
  *
- * @version 1.0
+ * @version 1.3
  */
 
 namespace NakedCatPlugins\Recommend_Ifthenpay;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
-// Bail if another bundled copy of this snippet has already booted in this request.
-if ( defined( 'NAKEDCAT_RECOMMEND_IFTHENPAY' ) ) {
-	return;
-}
-
-define( 'NAKEDCAT_RECOMMEND_IFTHENPAY', true );
 
 /**
  * Recommend Ifthenpay.
@@ -80,20 +69,68 @@ class Recommend_Ifthenpay {
 	const DISMISS_NAMESPACE = 'nakedcat-recommend-ifthenpay/v1';
 
 	/**
-	 * Register hooks.
+	 * Array of translatable strings.
+	 *
+	 * @var array
 	 */
-	public function register_hooks() {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-		add_filter( 'rest_request_after_callbacks', array( $this, 'inject_suggestion' ), 10, 3 );
-		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
-		add_action( 'admin_print_styles-woocommerce_page_wc-settings', array( $this, 'print_entry_styles' ) );
+	private $strings = array();
+
+	/**
+	 * Initialize the plugin by registering hooks.
+	 */
+	public function init() {
+		$this->strings = $this->get_strings();
+		$this->register_hooks();
 	}
 
 	/**
-	 * Load the plugin's textdomain for translations.
+	 * Build the UI strings for the current admin locale.
+	 *
+	 * @return array
 	 */
-	public function load_textdomain() {
-		load_textdomain( 'recommend-ifthenpay', plugin_dir_path( __FILE__ ) . 'pt_PT.mo' );
+	private function get_strings(): array {
+		$strings      = array(
+			'recommended_for_portugal' => 'Recommended for Portugal',
+			'about_url'                => 'https://wordpress.org/plugins/multibanco-ifthen-software-gateway-for-woocommerce/',
+			'pricing_url'              => 'https://ifthenpay.com/?lang=en#tarifario',
+			'description'              => 'Receive payments from customers in Portugal and around the world with Ifthenpay, the most comprehensive Portuguese payment processor for WooCommerce stores.',
+			'title'                    => 'Multibanco, MB WAY, Apple Pay, Google Pay, PIX and more',
+		);
+		$admin_locale = $this->get_admin_locale();
+		if ( stripos( $admin_locale, 'pt' ) === 0 ) {
+			$strings = array(
+				'recommended_for_portugal' => 'Recomendado para Portugal',
+				'about_url'                => 'https://pt.wordpress.org/plugins/multibanco-ifthen-software-gateway-for-woocommerce/',
+				'pricing_url'              => 'https://ifthenpay.com/?lang=pt#tarifario',
+				'description'              => 'Receba pagamentos de clientes em Portugal e no mundo com a Ifthenpay, o processador de pagamentos Português mais completo para lojas WooCommerce.',
+				'title'                    => 'Multibanco, MB WAY, Apple Pay, Google Pay, PIX e mais',
+			);
+		}
+		return $strings;
+	}
+
+	/**
+	 * Get the current admin locale.
+	 *
+	 * @return string
+	 */
+	private function get_admin_locale(): string {
+		if ( is_admin() && function_exists( 'get_user_locale' ) ) {
+			return (string) get_user_locale();
+		}
+		if ( function_exists( 'determine_locale' ) ) {
+			return (string) determine_locale();
+		}
+		return (string) get_locale();
+	}
+
+	/**
+	 * Register hooks.
+	 */
+	public function register_hooks() {
+		add_filter( 'rest_request_after_callbacks', array( $this, 'inject_suggestion' ), 10, 3 );
+		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+		add_action( 'admin_print_styles-woocommerce_page_wc-settings', array( $this, 'print_entry_styles' ) );
 	}
 
 	/**
@@ -120,7 +157,7 @@ class Recommend_Ifthenpay {
 	public function print_entry_styles() {
 		$id = self::SUGGESTION_ID;
 
-		$pill_text = '🇵🇹 ' . __( 'Recommended for Portugal', 'recommend-ifthenpay' );
+		$pill_text = '🇵🇹 ' . $this->strings['recommended_for_portugal'];
 		$pill_text = str_replace(
 			array( '\\', '"', '</' ),
 			array( '\\\\', '\\"', '<\/' ),
@@ -235,8 +272,8 @@ class Recommend_Ifthenpay {
 			'_suggestion_id' => self::SUGGESTION_ID,
 			'_type'          => 'suggestion', // PaymentsProviders::TYPE_SUGGESTION
 			'_order'         => -1, // Force top of list.
-			'title'          => esc_html__( 'Multibanco, MB WAY, Apple Pay, Google Pay, PIX and more', 'recommend-ifthenpay' ),
-			'description'    => esc_html__( 'Receive payments from customers in Portugal and around the world with Ifthenpay, the most comprehensive Portuguese payment processor for WooCommerce stores.', 'recommend-ifthenpay' ),
+			'title'          => esc_html( $this->strings['title'] ),
+			'description'    => esc_html( $this->strings['description'] ),
 			'image'          => esc_url( self::ICON_URL ),
 			'icon'           => esc_url( self::ICON_URL ),
 			'plugin'         => array(
@@ -247,11 +284,11 @@ class Recommend_Ifthenpay {
 			'links'          => array(
 				array(
 					'_type' => 'about',
-					'url'   => esc_html__( 'https://wordpress.org/plugins/multibanco-ifthen-software-gateway-for-woocommerce/', 'recommend-ifthenpay' ),
+					'url'   => esc_url( $this->strings['about_url'] ),
 				),
 				array(
 					'_type' => 'pricing',
-					'url'   => esc_html__( 'https://ifthenpay.com/?lang=en#tarifario', 'recommend-ifthenpay' ),
+					'url'   => esc_url( $this->strings['pricing_url'] ),
 				),
 			),
 			'tags'           => array( 'preferred' ),
@@ -274,8 +311,8 @@ class Recommend_Ifthenpay {
 		return array(
 			'id'          => self::SUGGESTION_ID,
 			'_priority'   => -1, // Force top of list.
-			'title'       => esc_html__( 'Recommended for Portugal', 'recommend-ifthenpay' ),
-			'description' => esc_html__( 'Receive payments from customers in Portugal and around the world with Ifthenpay, the most comprehensive Portuguese payment processor for WooCommerce stores.', 'recommend-ifthenpay' ),
+			'title'       => esc_html( $this->strings['recommended_for_portugal'] ),
+			'description' => esc_html( $this->strings['description'] ),
 		);
 	}
 
@@ -289,8 +326,8 @@ class Recommend_Ifthenpay {
 		return array(
 			'id'          => self::SUGGESTION_ID,
 			'_type'       => self::SUGGESTION_ID, // Our own category.
-			'title'       => esc_html__( 'Multibanco, MB WAY, Apple Pay, Google Pay, PIX and more', 'recommend-ifthenpay' ),
-			'description' => esc_html__( 'Receive payments from customers in Portugal and around the world with Ifthenpay, the most comprehensive Portuguese payment processor for WooCommerce stores.', 'recommend-ifthenpay' ),
+			'title'       => esc_html( $this->strings['title'] ),
+			'description' => esc_html( $this->strings['description'] ),
 			'icon'        => esc_url( self::ICON_URL ),
 			'plugin'      => array(
 				'_type' => 'wporg', // WordPress.org
@@ -299,11 +336,11 @@ class Recommend_Ifthenpay {
 			'links'       => array(
 				array(
 					'_type' => 'about',
-					'url'   => esc_html__( 'https://wordpress.org/plugins/multibanco-ifthen-software-gateway-for-woocommerce/', 'recommend-ifthenpay' ),
+					'url'   => esc_url( $this->strings['about_url'] ),
 				),
 				array(
 					'_type' => 'pricing',
-					'url'   => esc_html__( 'https://ifthenpay.com/?lang=en#tarifario', 'recommend-ifthenpay' ),
+					'url'   => esc_url( $this->strings['pricing_url'] ),
 				),
 			),
 			'tags'        => array( 'preferred' ),
@@ -347,8 +384,10 @@ class Recommend_Ifthenpay {
 		if ( ! $user_id ) {
 			return new \WP_Error(
 				'not_logged_in',
-				__( 'You must be logged in.', 'recommend-ifthenpay' ),
-				array( 'status' => 401 )
+				'You must be logged in.',
+				array(
+					'status' => 401,
+				)
 			);
 		}
 
@@ -357,5 +396,3 @@ class Recommend_Ifthenpay {
 		return rest_ensure_response( array( 'success' => true ) );
 	}
 }
-
-( new Recommend_Ifthenpay() )->register_hooks();

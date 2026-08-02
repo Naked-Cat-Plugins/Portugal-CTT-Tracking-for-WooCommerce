@@ -89,6 +89,9 @@ You can report any security bugs found in the source code of this plugin through
 
 == Changelog ==
 
+= TBA =
+* [DEV] Bundled ifthenpay suggestion module updated: documented the intentional Portugal-only display exception, guarded an array_unshift() call against a possible future WooCommerce REST response change
+
 = 2.6 - 2026-04-12 =
 * [FIX] PHP fatal error, introduced in 2.5, in specific scenarios
 

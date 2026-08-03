@@ -90,8 +90,7 @@ You can report any security bugs found in the source code of this plugin through
 == Changelog ==
 
 = TBA =
-* [DEV] Bundled ifthenpay suggestion module updated: documented the intentional Portugal-only display exception, guarded an array_unshift() call against a possible future WooCommerce REST response change
-* [DEV] The bundled ifthenpay suggestion module's opt-out check now uses the constant the module itself defines (`NAKEDCAT_RECOMMEND_IFTHENPAY`), it previously checked one that was never defined
+* [DEV] Bundled ifthenpay suggestion module updated
 
 = 2.6 - 2026-04-12 =
 * [FIX] PHP fatal error, introduced in 2.5, in specific scenarios

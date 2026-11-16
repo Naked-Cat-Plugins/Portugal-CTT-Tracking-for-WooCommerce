@@ -29,11 +29,11 @@ Clients will also be able to track the order shipping status on the “My Accoun
 
 = Do your customers still write the full address details manually on the checkout? =
 
-Activate the automatic filling of the address details at the checkout, including street name and neighbourhood, based on the postal, avoiding incorrect data at the time of shipping, with our plugin [Portuguese Postcodes for WooCommerce](https://nakedcatplugins.com/product/portuguese-postcodes-for-woocommerce-technical-support/)
+Activate the automatic filling of the address details at the checkout, including street name and neighbourhood, based on the postal code, avoiding incorrect data at the time of shipping, with our plugin [Portuguese Postcodes for WooCommerce](https://nakedcatplugins.com/product/portuguese-postcodes-for-woocommerce-technical-support/)
 
 = Are you already issuing automatic invoices on your WooCommerce store? =
 
-If not, get to know our new plugin: [Invoicing with InvoiceXpress for WooCommerce](https://wordpress.org/plugins/woo-billing-with-invoicexpress/)
+If not, get to know our plugin: [Invoicing with InvoiceXpress for WooCommerce](https://wordpress.org/plugins/woo-billing-with-invoicexpress/)
 
 = Other (premium) plugins =
 
@@ -43,12 +43,12 @@ Already know our other WooCommerce (premium) plugins?
 * [EU Guarantee Notice and GARAN Label for WordPress and WooCommerce](https://nakedcatplugins.com/product/eu-guarantee-notice-and-garan-label-for-wordpress-and-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=ctttracking_woocommerce_plugin) - Show the mandatory EU guarantee notice and the EU GARAN label with the official European Commission artwork, and let Proof of Notice check every day that the notice is still on your site
 * [Portuguese Postcodes for WooCommerce](https://nakedcatplugins.com/product/portuguese-postcodes-for-woocommerce-technical-support/) - Automatic filling of the address details at the checkout, including street name and neighbourhood, based on the postal code
 * [Invoicing with InvoiceXpress for WooCommerce](https://wordpress.org/plugins/woo-billing-with-invoicexpress/) - Automatically issue invoices directly from the WooCommerce order
-* [DPD Portugal for WooCommerce](https://nakedcatplugins.com/product/dpd-portugal-for-woocommerce/) - Create shipping and return guide in the DPD webservice directly from the WooCommerce order
-* [Feed KuantoKusta for WooCommerce](https://nakedcatplugins.com/product/feed-kuantokusta-for-woocommerce-pro/) - Publish your products on Kuanto Kusta with this easy to use feed generator
+* [DPD Portugal for WooCommerce](https://nakedcatplugins.com/product/dpd-portugal-for-woocommerce/) - Create shipping and return labels in the DPD webservice directly from the WooCommerce order
+* [Feed KuantoKusta for WooCommerce](https://nakedcatplugins.com/product/feed-kuantokusta-for-woocommerce-pro/) - Publish your products on KuantoKusta with this easy to use feed generator
 * [Simple WooCommerce Order Approval](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/) - The hassle-free solution for WooCommerce order approval before payment
 * [Shop as Client for WooCommerce](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/) - Quickly create orders on behalf of your customers
 * [Taxonomy/Term and Role based Discounts for WooCommerce](https://nakedcatplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/) - Easily create bulk discount rules for products based on any taxonomy terms (built-in or custom)
-* [DPD / SEUR / Geopost Pickup and Lockers network for WooCommerce](https://nakedcatplugins.com/product/dpd-seur-geopost-pickup-and-lockers-network-for-woocommerce/) - Deliver your WooCommerce orders on the DPD and SEUR Pickup network of Parcelshops and Lockers in 9 European countries
+* [DPD / Geopost Pickup and Lockers network for WooCommerce](https://nakedcatplugins.com/product/dpd-seur-geopost-pickup-and-lockers-network-for-woocommerce/) - Deliver your WooCommerce orders on the DPD, Chronopost, BRT, SEUR and PostNord Pickup network of Parcelshops and Lockers in 25 European countries
 
 == Installation ==
 
@@ -81,9 +81,9 @@ You can use the `portugal_ctt_tracking_set_tracking_code` action with two argume
 
 = I need technical support. Who should I contact, CTT or Webdados? =
 
-The development and support is [Webdados](https://www.webdados.pt) responsibility.
+The development and support are the responsibility of [Webdados](https://www.webdados.pt).
 For free/standard support you should use the support forums at WordPress.org but no answer is guaranteed.
-For premium/urgent support or custom developments you should contact [Webdados](https://www.webdados.pt/contactos/) directly. Charges may (and most certainly will) apply.
+For premium/urgent support or custom developments you should contact [Webdados](https://www.webdados.pt/contactos/) directly. Charges apply.
 
 = Where do I report security vulnerabilities found in this plugin? =  
  

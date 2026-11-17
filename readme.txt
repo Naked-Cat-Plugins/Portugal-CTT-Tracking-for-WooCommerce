@@ -87,7 +87,7 @@ For premium/urgent support or custom developments you should contact [Webdados](
 
 = Where do I report security vulnerabilities found in this plugin? =  
  
-You can report any security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/portugal-ctt-tracking-woocommerce). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
+You can report any security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/9e5fbb52-f455-42f1-b352-f1d9e5f2b309). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
 
 == Changelog ==
 

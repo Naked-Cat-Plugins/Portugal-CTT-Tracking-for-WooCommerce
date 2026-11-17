@@ -83,7 +83,7 @@ You can use the `portugal_ctt_tracking_set_tracking_code` action with two argume
 
 The development and support are the responsibility of [Webdados](https://www.webdados.pt).
 For free/standard support you should use the support forums at WordPress.org but no answer is guaranteed.
-For premium/urgent support or custom developments you should contact [Webdados](https://www.webdados.pt/contactos/) directly. Charges apply.
+For premium/urgent support or custom developments you should contact [Naked Cat Plugins](https://nakedcatplugins.com/product/custom-development/) directly. Charges apply.
 
 = Where do I report security vulnerabilities found in this plugin? =  
  
